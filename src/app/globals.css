@@ -1,0 +1,261 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --primary: #2563eb;
+  --primary-foreground: #ffffff;
+  --border: #e2e8f0;
+}
+
+.dark {
+  --background: #090d16;
+  --foreground: #f8fafc;
+  --card: #0f172a;
+  --card-foreground: #f8fafc;
+  --primary: #3b82f6;
+  --primary-foreground: #ffffff;
+  --border: #1e293b;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11", "tnum";
+}
+
+/* Remove awkward spinner arrows from number inputs */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.4);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.7);
+}
+
+/* Animations for dialogs & popovers */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes zoomIn95 {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.animate-in {
+  animation-duration: 150ms;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  animation-fill-mode: forwards;
+}
+
+.fade-in {
+  animation-name: fadeIn;
+}
+
+.zoom-in-95 {
+  animation-name: zoomIn95;
+}
+
+@page {
+  size: A4 portrait;
+  margin: 8mm 10mm;
+}
+
+@media print {
+  /* 1. Global Reset & Box Sizing */
+  *, *::before, *::after {
+    box-sizing: border-box !important;
+  }
+
+  html, body {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    min-height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 10pt !important;
+    line-height: 1.35 !important;
+    overflow: visible !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* 2. Unwrap container flow for printable document */
+  body > div,
+  main,
+  div[class*="h-screen"],
+  div[class*="flex h-full"],
+  div[class*="flex-1"] {
+    display: block !important;
+    position: static !important;
+    overflow: visible !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    box-sizing: border-box !important;
+  }
+
+  div[class*="overflow-y-auto"]:not(.master-list-panel):not(aside),
+  div[class*="overflow-hidden"]:not(.master-list-panel):not(aside),
+  div[class*="overflow-auto"]:not(.master-list-panel):not(aside) {
+    display: block !important;
+    position: static !important;
+    overflow: visible !important;
+    height: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    box-sizing: border-box !important;
+  }
+
+  /* 3. The Clean A4 Sheet Container - Safe Inner Buffer */
+  .printable-document-sheet,
+  div[class*="printable-document-sheet"] {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    box-sizing: border-box !important;
+    position: relative !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: auto !important;
+    margin: 0 auto !important;
+    padding: 0 4mm !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+    overflow: visible !important;
+  }
+
+  /* 4. Force 2 Columns for Totals & Bank details */
+  .printable-document-sheet div[class*="grid-cols-1"][class*="md:grid-cols-2"],
+  .printable-document-sheet div[class*="grid-cols-1"][class*="sm:grid-cols-2"],
+  .printable-document-sheet div[class*="grid-cols-2"],
+  .printable-document-sheet .print\:grid-cols-2 {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 1.25rem !important;
+  }
+
+  /* 5. Enforce High Contrast Dark Text & Light Backgrounds (Override Dark Mode) */
+  .dark,
+  .dark body,
+  .dark .printable-document-sheet,
+  .dark .printable-document-sheet * {
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+    border-color: #cbd5e1 !important;
+  }
+
+  .dark .printable-document-sheet [class*="text-slate-400"],
+  .dark .printable-document-sheet [class*="text-slate-500"] {
+    color: #475569 !important;
+  }
+
+  .dark .printable-document-sheet [class*="bg-slate-50"],
+  .dark .printable-document-sheet [class*="bg-slate-100"],
+  .dark .printable-document-sheet [class*="bg-slate-800"],
+  .dark .printable-document-sheet [class*="bg-slate-900"],
+  .dark .printable-document-sheet [class*="bg-slate-950"] {
+    background-color: #f8fafc !important;
+  }
+
+  /* 6. Table Layout & Cell Padding inside Printable Sheet */
+  .printable-document-sheet table {
+    width: 100% !important;
+    max-width: 100% !important;
+    border-collapse: collapse !important;
+  }
+
+  .printable-document-sheet th,
+  .printable-document-sheet td {
+    padding-left: 6px !important;
+    padding-right: 6px !important;
+  }
+
+  table, tr, td, th, .avoid-break {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  /* 7. ABSOLUTE REMOVAL OF ALL APP CHROME & MASTER LISTS (Highest Priority at bottom) */
+  header,
+  nav,
+  aside,
+  footer,
+  button,
+  input,
+  select,
+  textarea,
+  [role="dialog"]:not(.printable-dialog),
+  .no-print,
+  .print\:hidden,
+  .master-list-panel,
+  [class*="no-print"],
+  [class*="print:hidden"],
+  div[class*="shrink-0"][class*="border-r"],
+  div[class*="w-80"],
+  div[class*="lg:w-96"],
+  div[class*="w-60"],
+  div[class*="w-64"][class*="border-r"],
+  div[class*="h-11"][class*="border-b"],
+  div[class*="border-b"][class*="px-6"],
+  div[class*="sticky top-0"] {
+    display: none !important;
+    visibility: hidden !important;
+    position: absolute !important;
+    top: -99999px !important;
+    left: -99999px !important;
+    width: 0 !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+}
+
