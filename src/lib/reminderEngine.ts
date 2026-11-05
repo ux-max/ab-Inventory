@@ -23,7 +23,9 @@ export const DEFAULT_AUTO_REMINDER_SETTINGS: AutoRemindersSettings = {
   enableAutoVendorReminders: true,
   defaultSchedulePreset: "standard",
   defaultChannel: "whatsapp",
-  beforeDueDays: 3,
+  beforeDueDays: 0,
+  reminderStartTiming: "before",
+  reminderStartTarget: "due_date",
   overdueLevel1Days: 3,
   overdueLevel2Days: 10,
   overdueLevel3Days: 30,
@@ -33,6 +35,14 @@ export const DEFAULT_AUTO_REMINDER_SETTINGS: AutoRemindersSettings = {
   enableAdminGstAlerts: true,
   enableAdminEwayBillAlerts: true,
   enableAdminDailyDigest: true,
+  adminDigestWhatsApp: true,
+  adminDigestEmail: true,
+  adminWhatsAppNumber: "+91 98200 11001",
+  adminEmailAddress: "admin@automatebusiness.com",
+  adminDigestTime: "09:00 AM",
+  includeLowStockInDigest: true,
+  includeDueBillsInDigest: true,
+  includeSalesSummaryInDigest: true,
   templates: DEFAULT_REMINDER_TEMPLATES
 }
 

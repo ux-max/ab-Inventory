@@ -416,9 +416,14 @@ export function PartyDetailView({ party, onClose, onEdit, onDelete, onCreateInvo
                       {party.email || `${party.name.toLowerCase().replace(/[^a-z0-9]/g, "")}@example.com`}
                     </span>
                   </div>
-                  <div className="grid grid-cols-3 py-1 border-b border-slate-100 dark:border-slate-800/60">
+                  <div className="grid grid-cols-3 py-1 border-b border-slate-100 dark:border-slate-800/60 items-center">
                     <span className="text-slate-500 dark:text-slate-400">Phone</span>
-                    <span className="col-span-2 font-medium tabular-nums text-slate-800 dark:text-slate-200">{party.phone}</span>
+                    <div className="col-span-2 flex items-center justify-between">
+                      <span className="font-medium tabular-nums text-slate-800 dark:text-slate-200">{party.phone}</span>
+                      <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-semibold bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+                        WA Opted-in
+                      </span>
+                    </div>
                   </div>
                   <div className="grid grid-cols-3 py-1 border-b border-slate-100 dark:border-slate-800/60">
                     <span className="text-slate-500 dark:text-slate-400">Payment Terms</span>

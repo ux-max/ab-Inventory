@@ -193,7 +193,7 @@ export default function HomePage() {
           )}
 
           {effectiveModule === "settings" && (
-            <SettingsModule />
+            <SettingsModule initialTab={currentNav.subModule as any} />
           )}
         </main>
       </div>

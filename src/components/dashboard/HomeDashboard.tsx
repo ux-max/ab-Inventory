@@ -27,7 +27,9 @@ import {
   Sparkles,
   Layers,
   Calendar,
-  ExternalLink
+  ExternalLink,
+  AlertCircle,
+  X
 } from "lucide-react"
 import { Select } from "@/components/ui/select"
 import { formatINR } from "@/lib/utils"
@@ -65,6 +67,7 @@ export function HomeDashboard({ onNavigate, onTriggerAction }: HomeDashboardProp
   const [topItemsPeriod, setTopItemsPeriod] = useState<ReportDatePreset>("this_month")
   const [purchasePeriod, setPurchasePeriod] = useState<ReportDatePreset>("this_month")
   const [salesOrderPeriod, setSalesOrderPeriod] = useState<ReportDatePreset>("this_month")
+  const [showIntegrationNotice, setShowIntegrationNotice] = useState(true)
 
   // --- FINANCIAL & CASH FLOW METRICS ---
   const totalReceivables = useMemo(() => {
@@ -461,6 +464,33 @@ export function HomeDashboard({ onNavigate, onTriggerAction }: HomeDashboardProp
           </button>
         </div>
       </div>
+
+      {/* Integration Attention Banner (PDF INT-22) */}
+      {showIntegrationNotice && (
+        <div className="flex items-center justify-between gap-3 px-4 py-2.5 rounded-xl border border-amber-200 dark:border-amber-900/60 bg-amber-50/70 dark:bg-amber-950/30 text-amber-900 dark:text-amber-200 text-xs">
+          <div className="flex items-center gap-2.5 min-w-0">
+            <AlertCircle className="h-4 w-4 shrink-0 text-amber-600 dark:text-amber-400" />
+            <span className="truncate font-medium">
+              Automate CRM conflict detected: 1 party phone conflict requires manual resolution.
+            </span>
+          </div>
+          <div className="flex items-center gap-2 shrink-0">
+            <button
+              onClick={() => onNavigate("settings", "integrations")}
+              className="px-2.5 py-1 rounded-md bg-amber-600 hover:bg-amber-700 text-white font-semibold text-[11px] transition-colors cursor-pointer shadow-2xs"
+            >
+              Resolve in Hub
+            </button>
+            <button
+              onClick={() => setShowIntegrationNotice(false)}
+              className="p-1 rounded-md text-amber-600 hover:bg-amber-100 dark:hover:bg-amber-900/40 transition-colors cursor-pointer"
+              title="Dismiss notice"
+            >
+              <X className="h-3.5 w-3.5" />
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* ========================================================================= */}
       {/* FINANCIAL HEALTH & CASH FLOW STRIP (4 METRICS)                            */}

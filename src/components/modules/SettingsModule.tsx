@@ -12,6 +12,7 @@ import { RolesPermissionsSettings } from "@/components/settings/RolesPermissions
 import { UsersSettings } from "@/components/settings/UsersSettings"
 import { UserInfoSettings } from "@/components/settings/UserInfoSettings"
 import { RemindersSettings } from "@/components/settings/RemindersSettings"
+import { IntegrationsHub } from "@/components/settings/integrations/IntegrationsHub"
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -33,6 +34,13 @@ export function SettingsModule({ initialTab = "general" }: SettingsModuleProps) 
   const safeInitialTab = (initialTab === "items" || initialTab === "print" || initialTab === "terms") ? "general" : initialTab
   const [activeTab, setActiveTab] = useState<SettingsTabKey>(safeInitialTab)
   const { business, updateBusiness } = useApp()
+
+  React.useEffect(() => {
+    if (initialTab) {
+      const safe = (initialTab === "items" || initialTab === "print" || initialTab === "terms") ? "general" : initialTab
+      setActiveTab(safe)
+    }
+  }, [initialTab])
 
   return (
     <div className="flex h-full w-full overflow-hidden bg-white dark:bg-slate-950">
@@ -60,7 +68,12 @@ export function SettingsModule({ initialTab = "general" }: SettingsModuleProps) 
         {activeTab === "users" && <UsersSettings />}
 
         {/* Auto Reminders & Alerts Tab */}
-        {activeTab === "reminders" && <RemindersSettings />}
+        {activeTab === "reminders" && (
+          <RemindersSettings onNavigateToIntegrations={() => setActiveTab("integrations")} />
+        )}
+
+        {/* Integrations & API Tab */}
+        {activeTab === "integrations" && <IntegrationsHub />}
       </div>
     </div>
   )

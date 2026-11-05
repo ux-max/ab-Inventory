@@ -2,7 +2,7 @@
 // AUTO REMINDERS & NOTIFICATIONS TYPES
 // ==========================================
 
-export type ReminderChannel = "whatsapp" | "email" | "sms"
+export type ReminderChannel = "whatsapp" | "email" | "both" | "sms"
 
 export type PartyReminderType =
   | "upcoming_due"    // 2-3 days before due date
@@ -75,6 +75,8 @@ export interface AutoRemindersSettings {
   defaultSchedulePreset: ReminderSchedulePreset
   defaultChannel: ReminderChannel
   beforeDueDays: number // default: 3
+  reminderStartTiming?: "before" | "after"
+  reminderStartTarget?: "due_date" | "invoice_date"
   overdueLevel1Days: number // default: 3
   overdueLevel2Days: number // default: 10
   overdueLevel3Days: number // default: 30
@@ -86,6 +88,16 @@ export interface AutoRemindersSettings {
   enableAdminGstAlerts: boolean
   enableAdminEwayBillAlerts: boolean
   enableAdminDailyDigest: boolean
+
+  // Admin daily digest delivery settings
+  adminDigestWhatsApp?: boolean
+  adminDigestEmail?: boolean
+  adminWhatsAppNumber?: string
+  adminEmailAddress?: string
+  adminDigestTime?: string
+  includeLowStockInDigest?: boolean
+  includeDueBillsInDigest?: boolean
+  includeSalesSummaryInDigest?: boolean
 
   // Templates
   templates: ReminderMessageTemplates

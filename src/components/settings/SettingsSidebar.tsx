@@ -8,7 +8,8 @@ import {
   Users,
   Search,
   UserCircle,
-  Bell
+  Bell,
+  PlugZap
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 
@@ -22,6 +23,7 @@ export type SettingsTabKey =
   | "print" 
   | "terms"
   | "reminders"
+  | "integrations"
 
 interface SettingsSidebarProps {
   activeTab: SettingsTabKey
@@ -64,6 +66,7 @@ const SETTINGS_SECTIONS: NavSection[] = [
     title: "Alerts & Automation",
     items: [
       { id: "reminders", label: "Auto Reminders", icon: Bell },
+      { id: "integrations", label: "Integrations & API", icon: PlugZap },
     ],
   },
 ]
